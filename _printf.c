@@ -5,7 +5,7 @@
 
 /**
  * _printf - function that produces output according to format
- * @format: the specified format 
+ * @format: the specified format
  * Return: returns 1 or 0
  */
 int _printf(const char *format, ...)
@@ -14,6 +14,7 @@ int _printf(const char *format, ...)
 	int i;
 	int j;
 	int counter = 0;
+
 	va_start(ags, format);
 
 	for (i = 0; format[i] != '\0'; i++)
@@ -27,16 +28,17 @@ int _printf(const char *format, ...)
 				putchar('%');
 				counter++;
 			}
-			else if(format[i] == 'c')
+			else if (format[i] == 'c')
 			{
 				char ch = va_arg(ags, int);
+
 				putchar(ch);
 				counter++;
 			}
-			else if(format[i] == 's')
+			else if (format[i] == 's')
 			{
 				char *str = va_arg(ags, char *);
-				
+
 				for (j = 0; str[j] != '\0'; j++)
 				{
 					putchar(str[j]);
