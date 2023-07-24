@@ -1,8 +1,6 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdarg.h>
-#include <stdbool.h>
-
+#include "main.h"
 /**
  * _printf - function that produces output according to format
  * @format: the specified format
@@ -10,55 +8,48 @@
  */
 int _printf(const char *format, ...)
 {
-	va_list ags;
+	va_list args;
 	int i;
-	int j;
 	int counter = 0;
 
-	va_start(ags, format);
-
+	va_start(args, format);
 	for (i = 0; format[i] != '\0'; i++)
 	{
 		if (format[i] == '%')
 		{
 			i++;
-
+			/*checks for the special case '%%'*/
 			if (format[i] == '%')
 			{
 				putchar('%');
 				counter++;
 			}
-			else if (format[i] == 'c')
-			{
-				char ch = va_arg(ags, int);
-
-				putchar(ch);
-				counter++;
-			}
-			else if (format[i] == 's')
-			{
-				char *str = va_arg(ags, char *);
-
-				for (j = 0; str[j] != '\0'; j++)
-				{
-					putchar(str[j]);
-					counter++;
-				}
-			}
+			/*get appropriate function based on the specifier*/
 			else
 			{
-				putchar('%');
-				putchar(format[i]);
-				counter += 2;
-			}
+				print_func func = get_function(format[i]);
 
+				if (func != NULL)
+				{
+					/*call the corresponding helper function*/
+					func(args, &counter);
+				}
+				else
+				{
+					/*handle invalid specifier*/
+					putchar('%');
+					putchar(format[i]);
+					counter += 2;
+				}
+			}
 		}
 		else
 		{
+			/*prints regular character*/
 			putchar(format[i]);
 			counter++;
 		}
 	}
-	va_end(ags);
+	va_end(args);
 	return (counter);
 }
