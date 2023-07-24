@@ -40,7 +40,23 @@ void  print_string(va_list args, int *counter)
 void print_integer(va_list args, int *counter)
 {
 	int num = va_arg(args, int);
+	int digits = 1;
 
-	printf("%d", num);
-	(*counter)++;
+	if (num < 0)
+	{
+		putchar('-');
+		(*counter)++;
+		num = -num;
+	}
+
+	while (num / digits > 9)
+		digits *= 10;
+
+	while (digits)
+	{
+		putchar('0' + num / digits);
+		(*counter)++;
+		num %= digits;
+		digits /= 10;
+	}
 }
