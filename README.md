@@ -1,4 +1,4 @@
-# 0x1B. C - Sorting algorithms & Big O
+# 0x11. C - printf
 ## The Domains/Concepts covered in this project: `C programming` `Group project`
 
 Compilation
